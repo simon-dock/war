@@ -13,35 +13,18 @@ def title(system, color):
     system.win.blit(text, (600,400))
 
 
-
 #movable_positionとboardをもとに盤面と選択されている駒、可動範囲を描画する
-def win_board(system, color):
+def board(system, win, color):
 
-    start_x = system.win_board_x-10
-    start_y = system.win_board_y-40 
-    end_x = system.win_board_x+990
-    end_y = system.win_board_y+990
-
-    if start_x < system.cursole_x and system.cursole_x < end_x:
-        if start_y < system.cursole_y and system.cursole_y < start_y+40:
-            if system.clicked == True:
-                system.update_distance(system.cursole_x-system.win_board_x,system.cursole_y-system.win_board_y)
-                system.on_board_drag()
-
-    if system.board_drag == True:
-        if system.dragging == True:
-            system.update_win_board(system.cursole_x-system.distance_x, system.cursole_y-system.distance_y)
-        else:
-            system.off_board_drag()
+    if win.board_close == True:
+        return
 
     for i in range(9):
         for j in range(9):
-            x_ren = 100*j+10*j+system.win_board_x
-            y_ren = 100*i+10*i+system.win_board_y
+            x_ren = 100*j+10*j + win.board_x+system.space
+            y_ren = 100*i+10*i + win.board_y+win.bar+system.space
             pygame.draw.rect(system.win, color.gray, (x_ren, y_ren, 100, 100))
 
-    start_pos = [[start_x,start_y],[start_x,end_y],[end_x,end_y],[end_x,start_y]]
-    pygame.draw.lines(system.win, color.white, True, start_pos, 2)
 
 #カーソルを描画
 def cursole(system, color):
