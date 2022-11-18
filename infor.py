@@ -11,9 +11,9 @@ class status(Enum):
     playing = 1
 
 #windowを列挙
-class active(Enum):
-    board = 0
-    menu = 1
+class win_name(Enum):
+    menu = 0
+    board = 1
 
 #色
 class color():
@@ -36,8 +36,8 @@ class system():
     def __init__(self):
         self.status = status.title
         self.active_candidacy = []
-        self.active_win = active.board
-        self.active_log = [active.board, active.menu]
+        self.active_win = win_name.board
+        self.active_log = [win_name.board, win_name.menu]
         self.run = True
         self.clicked = False
         self.dragging = False
@@ -50,10 +50,15 @@ class system():
         self.distance_x = 0
         self.distance_y = 0
 
+        self.icon = 30
+        self.bar = 40
         self.space = 10
 
         self.win = pygame.display.set_mode((Win_width, Win_height))
         pygame.display.set_caption("strategy")
+
+    def active_candidacy_init(self):
+        self.active_candidacy = []
 
     def active_win_update(self, result):
         self.active_win = result
@@ -85,58 +90,58 @@ class system():
 
 
 #windowの情報を保持するクラス
-class win():
+class menu():
 
     def __init__(self):
-        self.icon = 30
-        self.bar = 40
+        self.x = 1500
+        self.y = 10
+        self.width = 200
+        self.height = 1040
+        self.drag = False
+        self.close = False
 
-        self.board_x = 10
-        self.board_y = 10
-        self.board_width = 1000
-        self.board_height = 1040
-        self.board_drag = False
-        self.board_close = False
+    def update(self, x, y):
+        self.x = x
+        self.y = y
 
-        self.menu_x = 1500
-        self.menu_y = 10
-        self.menu_width = 200
-        self.menu_height = 1040
-        self.menu_drag = False
-        self.menu_close = False
-
-    def board_update(self, x, y):
-        self.board_x = x
-        self.board_y = y
-
-    def board_drag_on(self):
-        self.board_drag = True
+    def drag_on(self):
+        self.drag = True
     
-    def board_drag_off(self):
-        self.board_drag = False
+    def drag_off(self):
+        self.drag = False
 
-    def board_close_on(self):
-        self.board_close = True
+    def close_on(self):
+        self.close = True
 
-    def board_close_off(self):
-        self.board_close = False
+    def close_off(self):
+        self.close = False
 
+class board():
 
-    def menu_update(self, x, y):
-        self.menu_x = x
-        self.menu_y = y
+    def __init__(self):
+        self.x = 10
+        self.y = 10
+        self.width = 1000
+        self.height = 1040
+        self.drag = False
+        self.close = False
 
-    def menu_drag_on(self):
-        self.menu_drag = True
+    def update(self, x, y):
+        self.x = x
+        self.y = y
+
+    def drag_on(self):
+        self.drag = True
     
-    def menu_drag_off(self):
-        self.menu_drag = False
+    def drag_off(self):
+        self.drag = False
 
-    def menu_close_on(self):
-        self.menu_close = True
+    def close_on(self):
+        self.close = True
 
-    def menu_close_off(self):
-        self.menu_close = False
+    def close_off(self):
+        self.close = False
+
 
 
 #ゲーム情報を保持するクラス

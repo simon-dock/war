@@ -16,13 +16,13 @@ def title(system, color):
 #movable_positionとboardをもとに盤面と選択されている駒、可動範囲を描画する
 def board(system, win, color):
 
-    if win.board_close == True:
+    if win[infor.win_name.board.value].close == True:
         return
 
     for i in range(9):
         for j in range(9):
-            x_ren = 100*j+10*j + win.board_x+system.space
-            y_ren = 100*i+10*i + win.board_y+win.bar+system.space
+            x_ren = 100*j+10*j + win[infor.win_name.board.value].x+system.space
+            y_ren = 100*i+10*i + win[infor.win_name.board.value].y+system.bar+system.space
             pygame.draw.rect(system.win, color.gray, (x_ren, y_ren, 100, 100))
 
 

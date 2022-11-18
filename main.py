@@ -8,7 +8,7 @@ from pygame.locals import *
 def init():
     system = infor.system()
     color = infor.color()
-    win = infor.win()
+    win = [infor.menu(), infor.board()]
     game = infor.game()
 
     return system, game, color, win
@@ -52,17 +52,19 @@ def main():
         if system.status == infor.status.title:
             draw.title(system, color)
         if system.status == infor.status.playing:
+
+            window.process(system, win)
             
-            if system.active_win != infor.active.board:
+            if system.active_win != infor.win_name.board:
                 window.board(system, win, color)
                 draw.board(system, win, color)
-            if system.active_win != infor.active.menu:
+            if system.active_win != infor.win_name.menu:
                 window.menu(system, win, color)
 
-            if system.active_win == infor.active.board:
+            if system.active_win == infor.win_name.board:
                 window.board(system, win, color)
                 draw.board(system, win, color)
-            if system.active_win == infor.active.menu:
+            if system.active_win == infor.win_name.menu:
                 window.menu(system, win, color)
         draw.cursole(system, color)
         pygame.time.delay(5)
