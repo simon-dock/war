@@ -1,7 +1,7 @@
 import pygame
 import infor
 import draw
-import window
+import process
 import key
 from pygame.locals import *
 
@@ -18,11 +18,6 @@ def main():
     pygame.init()
 
     system, game, color, win = init()
-
-    hai = [infor.system(),infor.color,()]
-
-    print(hai[infor.status.title.value].active_win)
-
 
     while system.run:
         #表示の設定をリセット
@@ -48,24 +43,15 @@ def main():
             # キーを押したとき
             if event.type == KEYDOWN:  
                 key.where(system, win, event)
-
+                
         if system.status == infor.status.title:
             draw.title(system, color)
+
         if system.status == infor.status.playing:
 
-            window.process(system, win)
-            
-            if system.active_win != infor.win_name.board:
-                window.board(system, win, color)
-                draw.board(system, win, color)
-            if system.active_win != infor.win_name.menu:
-                window.menu(system, win, color)
+            process.window(system, win)
+            process.order(system, win, color)
 
-            if system.active_win == infor.win_name.board:
-                window.board(system, win, color)
-                draw.board(system, win, color)
-            if system.active_win == infor.win_name.menu:
-                window.menu(system, win, color)
         draw.cursole(system, color)
         pygame.time.delay(5)
         pygame.display.update()

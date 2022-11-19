@@ -1,4 +1,5 @@
 import pygame
+import draw
 from enum import Enum
 
 #ウィンドウサイズの設定
@@ -36,7 +37,6 @@ class system():
     def __init__(self):
         self.status = status.title
         self.active_candidacy = []
-        self.active_win = win_name.board
         self.active_log = [win_name.board, win_name.menu]
         self.run = True
         self.clicked = False
@@ -60,8 +60,11 @@ class system():
     def active_candidacy_init(self):
         self.active_candidacy = []
 
-    def active_win_update(self, result):
-        self.active_win = result
+    def active_log_update(self, result):
+        if self.active_log[0] != result:
+            for i in range(len(self.active_log)-1):
+                self.active_log[i+1] = self.active_log[i]
+            self.active_log[0] = result
 
     def run_off(self):
         self.run = False
@@ -87,12 +90,11 @@ class system():
         self.distance_y = y
 
 
-
-
 #windowの情報を保持するクラス
 class menu():
 
     def __init__(self):
+        self.name = win_name.menu
         self.x = 1500
         self.y = 10
         self.width = 200
@@ -100,6 +102,12 @@ class menu():
         self.drag = False
         self.close = False
 
+    def draw_flame(self, system, win, color):
+        draw.flame(system, win, color, self.name)
+
+    def draw_content(self, system, win, color):
+        pass
+
     def update(self, x, y):
         self.x = x
         self.y = y
@@ -116,9 +124,11 @@ class menu():
     def close_off(self):
         self.close = False
 
+
 class board():
 
     def __init__(self):
+        self.name = win_name.board
         self.x = 10
         self.y = 10
         self.width = 1000
@@ -126,6 +136,12 @@ class board():
         self.drag = False
         self.close = False
 
+    def draw_flame(self, system, win, color):
+        draw.flame(system, win, color, self.name)
+
+    def draw_content(self, system, win, color):
+        draw.board(system, win, color)
+
     def update(self, x, y):
         self.x = x
         self.y = y
@@ -141,7 +157,6 @@ class board():
 
     def close_off(self):
         self.close = False
-
 
 
 #ゲーム情報を保持するクラス
