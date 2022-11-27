@@ -33,11 +33,12 @@ def flame(system, win, color, name):
 
     start_x = win[name.value].x
     start_y = win[name.value].y
-
+    
     pygame.draw.rect(system.win, color.black_s, (start_x, start_y, win[name.value].width, win[name.value].height))
     pygame.draw.rect(system.win, color.white_s, (start_x, start_y, win[name.value].width, system.bar))
     pygame.draw.rect(system.win, color.red, (start_x+5, start_y+5, system.icon, system.icon))
-
+    pos = [[start_x,start_y],[start_x,start_y+win[name.value].height],[start_x+win[name.value].width,start_y+win[name.value].height],[start_x+win[name.value].width,start_y]]
+    pygame.draw.lines(system.win, color.white_s, True, pos, 2)
 
 #カーソルを描画
 def cursole(system, color):

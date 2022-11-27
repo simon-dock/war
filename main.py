@@ -8,7 +8,7 @@ from pygame.locals import *
 def init():
     system = infor.system()
     color = infor.color()
-    win = [infor.menu(), infor.board()]
+    win = [infor.menu(), infor.board(), infor.side()]
     game = infor.game()
 
     return system, game, color, win
@@ -57,6 +57,7 @@ def main():
         pygame.display.update()
         system.key_update(None)
         system.clicked_off()
+        print(system.active_log)
 
 if __name__ == '__main__':
     main()

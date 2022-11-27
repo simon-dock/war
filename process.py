@@ -1,6 +1,7 @@
 import pygame
 import infor
 
+#アクティブウィンドウの管理、ドラック、座標移動など
 def window(system, win):
 
     if system.clicked == True:
@@ -55,14 +56,11 @@ def window(system, win):
     system.active_candidacy_init()
 
 
+#優先度によって描画する
 def order(system, win, color):
 
-    for name in infor.win_name:
-        if system.active_log[0] != name:
-            win[name.value].draw_flame(system, win, color)
-            win[name.value].draw_content(system, win, color)  
+    for i in reversed(range(0,len(win))):
+        win[system.active_log[i].value].draw_flame(system, win, color)
+        win[system.active_log[i].value].draw_content(system, win, color) 
 
-    for name in infor.win_name:
-        if system.active_log[0] == name:
-            win[name.value].draw_flame(system, win, color)
-            win[name.value].draw_content(system, win, color)        
+    

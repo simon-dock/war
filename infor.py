@@ -15,6 +15,7 @@ class status(Enum):
 class win_name(Enum):
     menu = 0
     board = 1
+    side = 2
 
 #色
 class color():
@@ -37,7 +38,7 @@ class system():
     def __init__(self):
         self.status = status.title
         self.active_candidacy = []
-        self.active_log = [win_name.board, win_name.menu]
+        self.active_log = [win_name.board, win_name.menu, win_name.side]
         self.run = True
         self.clicked = False
         self.dragging = False
@@ -61,10 +62,20 @@ class system():
         self.active_candidacy = []
 
     def active_log_update(self, result):
-        if self.active_log[0] != result:
-            for i in range(len(self.active_log)-1):
-                self.active_log[i+1] = self.active_log[i]
-            self.active_log[0] = result
+        past_order = 0
+        for i in range(len(self.active_log)):
+            if result == self.active_log[i]:
+                past_order = i
+                break
+
+        tmp_now = self.active_log[0]
+        tmp_next = 0
+        for i in range(past_order):
+            tmp_next = self.active_log[i+1]
+            self.active_log[i+1] = tmp_now
+            tmp_now = tmp_next
+
+        self.active_log[0] = result
 
     def run_off(self):
         self.run = False
@@ -97,8 +108,8 @@ class menu():
         self.name = win_name.menu
         self.x = 1500
         self.y = 10
-        self.width = 200
-        self.height = 1040
+        self.width = 400
+        self.height = 600
         self.drag = False
         self.close = False
 
@@ -141,6 +152,39 @@ class board():
 
     def draw_content(self, system, win, color):
         draw.board(system, win, color)
+
+    def update(self, x, y):
+        self.x = x
+        self.y = y
+
+    def drag_on(self):
+        self.drag = True
+    
+    def drag_off(self):
+        self.drag = False
+
+    def close_on(self):
+        self.close = True
+
+    def close_off(self):
+        self.close = False
+
+class side():
+
+    def __init__(self):
+        self.name = win_name.side
+        self.x = 400
+        self.y = 10
+        self.width = 300
+        self.height = 600
+        self.drag = False
+        self.close = False
+
+    def draw_flame(self, system, win, color):
+        draw.flame(system, win, color, self.name)
+
+    def draw_content(self, system, win, color):
+        pass
 
     def update(self, x, y):
         self.x = x
